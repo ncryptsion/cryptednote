@@ -1,5 +1,5 @@
 # CryptedNote
-A truly secure, private and anonymous note.
+Anonymously and Securely save notes anytime with ease.
 
 # ⚙️ Installations
 ## Github
