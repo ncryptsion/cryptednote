@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CryptedNote</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: rgba(30, 41, 59, 0.7);
+            --primary-blue: #3b82f6;
+            --primary-blue-hover: #2563eb;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --input-bg: rgba(15, 23, 42, 0.6);
+            --border-color: #334155;
+            --glass-border: rgba(255, 255, 255, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Outfit', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            background-image:
+                radial-gradient(at 0% 0%, hsla(253, 16%, 7%, 1) 0, transparent 50%),
+                radial-gradient(at 50% 0%, hsla(225, 39%, 30%, 1) 0, transparent 50%),
+                radial-gradient(at 100% 0%, hsla(339, 49%, 30%, 0) 0, transparent 50%);
+            background-attachment: fixed;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: var(--text-main);
+            padding: 40px 20px;
+        }
+
+        .main-header {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            text-align: center;
+            background: linear-gradient(to right, #60a5fa, #a78bfa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+            letter-spacing: -0.5px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 450px;
+            padding: 40px;
+            background: var(--card-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            box-shadow:
+                0 4px 6px -1px rgba(0, 0, 0, 0.1),
+                0 2px 4px -1px rgba(0, 0, 0, 0.06),
+                0 20px 50px -10px rgba(0, 0, 0, 0.5);
+            animation: fadeIn 0.8s ease-out;
+            margin-bottom: 60px;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .form-group {
+            margin-bottom: 24px;
+            position: relative;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            transition: color 0.3s;
+        }
+
+        .form-input,
+        .form-select {
+            width: 100%;
+            padding: 14px 16px;
+            background: var(--input-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            color: var(--text-main);
+            font-size: 1rem;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        .form-input:focus,
+        .form-select:focus {
+            border-color: var(--primary-blue);
+            box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.15);
+            background: rgba(15, 23, 42, 0.8);
+        }
+
+        .form-group:focus-within .form-label {
+            color: var(--primary-blue);
+        }
+
+        /* Custom Select Styling */
+        .form-select {
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%2394a3b8' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 16px center;
+            background-size: 16px;
+            cursor: pointer;
+        }
+
+        .form-select:focus {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%233b82f6' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, var(--primary-blue), var(--primary-blue-hover));
+            border: none;
+            border-radius: 12px;
+            color: white;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+            box-shadow: 0 4px 6px rgba(59, 130, 246, 0.25);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px rgba(59, 130, 246, 0.35);
+        }
+
+        .submit-btn:active {
+            transform: translateY(0);
+        }
+
+        .submit-btn::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: 0.5s;
+        }
+
+        .submit-btn:hover::after {
+            left: 100%;
+        }
+
+        /* Sections General */
+        section {
+            width: 100%;
+            max-width: 1000px;
+            margin-bottom: 60px;
+            animation: fadeIn 1s ease-out;
+        }
+
+        h2 {
+            font-size: 1.8rem;
+            margin-bottom: 24px;
+            text-align: center;
+            font-weight: 600;
+            color: var(--text-main);
+        }
+
+        /* Why Section - Cards */
+        .why-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+        }
+
+        .card {
+            background: rgba(30, 41, 59, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 24px;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            background: rgba(30, 41, 59, 0.6);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            border-color: rgba(59, 130, 246, 0.3);
+        }
+
+        .card h3 {
+            font-size: 1.25rem;
+            margin-bottom: 12px;
+            color: var(--primary-blue);
+        }
+
+        .card p {
+            font-size: 0.95rem;
+            line-height: 1.6;
+            color: var(--text-muted);
+        }
+
+        /* Policies Section */
+        .policies-list {
+            list-style: none;
+            background: rgba(15, 23, 42, 0.3);
+            border-radius: 20px;
+            padding: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .policies-list li {
+            margin-bottom: 16px;
+            padding-left: 28px;
+            position: relative;
+            font-size: 1rem;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+
+        .policies-list li:last-child {
+            margin-bottom: 0;
+        }
+
+        .policies-list li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: var(--primary-blue);
+            font-weight: bold;
+        }
+
+        /* Footer */
+        footer {
+            margin-top: auto;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            text-align: center;
+            padding-bottom: 20px;
+            opacity: 0.8;
+            font-weight: 500;
+        }
+
+        /* Responsive */
+        @media (max-width: 480px) {
+            .container {
+                padding: 30px 20px;
+            }
+
+            .main-header {
+                font-size: 2rem;
+            }
+
+            section {
+                padding: 0 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header-section">
+        <h1 class="main-header">CryptedNote</h1>
+        <p class="subtitle">A truly secure, private and anonymous note</p>
+    </div>
+
+    <br />
+    <div class="container">
+        <form onsubmit="event.preventDefault();">
+            <div class="form-group">
+                <label for="primaryKey" class="form-label">Primary Key</label>
+                <input type="text" id="primary-key" class="form-input" placeholder="Enter your key" required>
+            </div>
+
+            <div class="form-group">
+                <label for="code" class="form-label">Code</label>
+                <input type="text" id="code" class="form-input" placeholder="Enter your code (location)" required>
+            </div>
+
+            <div class="form-group">
+                <label for="password" class="form-label">Password</label>
+                <input type="password" id="password" class="form-input" placeholder="••••••••" required>
+            </div>
+
+            <div class="form-group">
+                <label for="country" class="form-label">Country</label>
+                <select id="location" class="form-select" required>
+                    <option value="" disabled selected>Select a country</option>
+                    <option value="US">United States</option>
+                    <option value="CA">Canada</option>
+                    <option value="gb">United Kingdom</option>
+                    <option value="au">Australia</option>
+                    <option value="de">Germany</option>
+                    <option value="fr">France</option>
+                    <option value="jp">Japan</option>
+                    <option value="cn">China</option>
+                    <option value="in">India</option>
+                    <option value="br">Brazil</option>
+                    <option value="af">Afghanistan</option>
+                    <option value="al">Albania</option>
+                    <option value="dz">Algeria</option>
+                    <option value="as">American Samoa</option>
+                    <option value="ad">Andorra</option>
+                    <option value="ao">Angola</option>
+                    <option value="ai">Anguilla</option>
+                    <option value="aq">Antarctica</option>
+                    <option value="ag">Antigua and Barbuda</option>
+                    <option value="ar">Argentina</option>
+                    <option value="am">Armenia</option>
+                    <option value="aw">Aruba</option>
+                    <option value="at">Austria</option>
+                    <option value="az">Azerbaijan</option>
+                    <option value="bs">Bahamas</option>
+                    <option value="bh">Bahrain</option>
+                    <option value="bd">Bangladesh</option>
+                    <option value="bb">Barbados</option>
+                    <option value="by">Belarus</option>
+                    <option value="be">Belgium</option>
+                    <option value="bz">Belize</option>
+                    <option value="bj">Benin</option>
+                    <option value="bm">Bermuda</option>
+                    <option value="bt">Bhutan</option>
+                    <option value="bo">Bolivia</option>
+                    <option value="ba">Bosnia and Herzegovina</option>
+                    <option value="bw">Botswana</option>
+                    <option value="bv">Bouvet Island</option>
+                    <option value="io">British Indian Ocean Territory</option>
+                    <option value="bn">Brunei Darussalam</option>
+                    <option value="bg">Bulgaria</option>
+                    <option value="bf">Burkina Faso</option>
+                    <option value="bi">Burundi</option>
+                    <option value="kh">Cambodia</option>
+                    <option value="cm">Cameroon</option>
+                    <option value="cv">Cape Verde</option>
+                    <option value="ky">Cayman Islands</option>
+                    <option value="cf">Central African Republic</option>
+                    <option value="td">Chad</option>
+                    <option value="cl">Chile</option>
+                    <option value="cx">Christmas Island</option>
+                    <option value="cc">Cocos (Keeling) Islands</option>
+                    <option value="co">Colombia</option>
+                    <option value="km">Comoros</option>
+                    <option value="cg">Congo</option>
+                    <option value="ck">Cook Islands</option>
+                    <option value="cr">Costa Rica</option>
+                    <option value="ci">Cote D'Ivoire</option>
+                    <option value="hr">Croatia</option>
+                    <option value="cu">Cuba</option>
+                    <option value="cy">Cyprus</option>
+                    <option value="cz">Czech Republic</option>
+                    <option value="dk">Denmark</option>
+                    <option value="dj">Djibouti</option>
+                    <option value="dm">Dominica</option>
+                    <option value="do">Dominican Republic</option>
+                    <option value="ec">Ecuador</option>
+                    <option value="eg">Egypt</option>
+                    <option value="sv">El Salvador</option>
+                    <option value="gq">Equatorial Guinea</option>
+                    <option value="er">Eritrea</option>
+                    <option value="ee">Estonia</option>
+                    <option value="et">Ethiopia</option>
+                    <option value="fk">Falkland Islands (Malvinas)</option>
+                    <option value="fo">Faroe Islands</option>
+                    <option value="fj">Fiji</option>
+                    <option value="fi">Finland</option>
+                    <option value="gf">French Guiana</option>
+                    <option value="pf">French Polynesia</option>
+                    <option value="tf">French Southern Territories</option>
+                    <option value="ga">Gabon</option>
+                    <option value="gm">Gambia</option>
+                    <option value="ge">Georgia</option>
+                    <option value="gh">Ghana</option>
+                    <option value="gi">Gibraltar</option>
+                    <option value="gr">Greece</option>
+                    <option value="gl">Greenland</option>
+                    <option value="gd">Grenada</option>
+                    <option value="gp">Guadeloupe</option>
+                    <option value="gu">Guam</option>
+                    <option value="gt">Guatemala</option>
+                    <option value="gn">Guinea</option>
+                    <option value="gw">Guinea-Bissau</option>
+                    <option value="gy">Guyana</option>
+                    <option value="ht">Haiti</option>
+                    <option value="hm">Heard Island and Mcdonald Islands</option>
+                    <option value="va">Holy See (Vatican City State)</option>
+                    <option value="hn">Honduras</option>
+                    <option value="hk">Hong Kong</option>
+                    <option value="hu">Hungary</option>
+                    <option value="is">Iceland</option>
+                    <option value="id">Indonesia</option>
+                    <option value="ir">Iran</option>
+                    <option value="iq">Iraq</option>
+                    <option value="ie">Ireland</option>
+                    <option value="il">Israel</option>
+                    <option value="it">Italy</option>
+                    <option value="jm">Jamaica</option>
+                    <option value="jo">Jordan</option>
+                    <option value="kz">Kazakhstan</option>
+                    <option value="ke">Kenya</option>
+                    <option value="ki">Kiribati</option>
+                    <option value="kp">Korea, Democratic People's Republic of</option>
+                    <option value="kr">Korea, Republic of</option>
+                    <option value="kw">Kuwait</option>
+                    <option value="kg">Kyrgyzstan</option>
+                    <option value="la">Lao People's Democratic Republic</option>
+                    <option value="lv">Latvia</option>
+                    <option value="lb">Lebanon</option>
+                    <option value="ls">Lesotho</option>
+                    <option value="lr">Liberia</option>
+                    <option value="ly">Libyan Arab Jamahiriya</option>
+                    <option value="li">Liechtenstein</option>
+                    <option value="lt">Lithuania</option>
+                    <option value="lu">Luxembourg</option>
+                    <option value="mo">Macao</option>
+                    <option value="mk">Macedonia</option>
+                    <option value="mg">Madagascar</option>
+                    <option value="mw">Malawi</option>
+                    <option value="my">Malaysia</option>
+                    <option value="mv">Maldives</option>
+                    <option value="ml">Mali</option>
+                    <option value="mt">Malta</option>
+                    <option value="mh">Marshall Islands</option>
+                    <option value="mq">Martinique</option>
+                    <option value="mr">Mauritania</option>
+                    <option value="mu">Mauritius</option>
+                    <option value="yt">Mayotte</option>
+                    <option value="mx">Mexico</option>
+                    <option value="fm">Micronesia, Federated States of</option>
+                    <option value="md">Moldova, Republic of</option>
+                    <option value="mc">Monaco</option>
+                    <option value="mn">Mongolia</option>
+                    <option value="ms">Montserrat</option>
+                    <option value="ma">Morocco</option>
+                    <option value="mz">Mozambique</option>
+                    <option value="mm">Myanmar</option>
+                    <option value="na">Namibia</option>
+                    <option value="nr">Nauru</option>
+                    <option value="np">Nepal</option>
+                    <option value="nl">Netherlands</option>
+                    <option value="nc">New Caledonia</option>
+                    <option value="nz">New Zealand</option>
+                    <option value="ni">Nicaragua</option>
+                    <option value="ne">Niger</option>
+                    <option value="ng">Nigeria</option>
+                    <option value="nu">Niue</option>
+                    <option value="nf">Norfolk Island</option>
+                    <option value="mp">Northern Mariana Islands</option>
+                    <option value="no">Norway</option>
+                    <option value="om">Oman</option>
+                    <option value="pk">Pakistan</option>
+                    <option value="pw">Palau</option>
+                    <option value="pa">Panama</option>
+                    <option value="pg">Papua New Guinea</option>
+                    <option value="py">Paraguay</option>
+                    <option value="pe">Peru</option>
+                    <option value="ph">Philippines</option>
+                    <option value="pn">Pitcairn</option>
+                    <option value="pl">Poland</option>
+                    <option value="pt">Portugal</option>
+                    <option value="pr">Puerto Rico</option>
+                    <option value="qa">Qatar</option>
+                    <option value="re">Reunion</option>
+                    <option value="ro">Romania</option>
+                    <option value="ru">Russian Federation</option>
+                    <option value="rw">Rwanda</option>
+                    <option value="sh">Saint Helena</option>
+                    <option value="kn">Saint Kitts and Nevis</option>
+                    <option value="lc">Saint Lucia</option>
+                    <option value="pm">Saint Pierre and Miquelon</option>
+                    <option value="vc">Saint Vincent and the Grenadines</option>
+                    <option value="ws">Samoa</option>
+                    <option value="sm">San Marino</option>
+                    <option value="st">Sao Tome and Principe</option>
+                    <option value="sa">Saudi Arabia</option>
+                    <option value="sn">Senegal</option>
+                    <option value="cs">Serbia and Montenegro</option>
+                    <option value="sc">Seychelles</option>
+                    <option value="sl">Sierra Leone</option>
+                    <option value="sg">Singapore</option>
+                    <option value="sk">Slovakia</option>
+                    <option value="si">Slovenia</option>
+                    <option value="sb">Solomon Islands</option>
+                    <option value="so">Somalia</option>
+                    <option value="za">South Africa</option>
+                    <option value="es">Spain</option>
+                    <option value="lk">Sri Lanka</option>
+                    <option value="sd">Sudan</option>
+                    <option value="sr">Suriname</option>
+                    <option value="sj">Svalbard and Jan Mayen</option>
+                    <option value="sz">Swaziland</option>
+                    <option value="se">Sweden</option>
+                    <option value="ch">Switzerland</option>
+                    <option value="sy">Syrian Arab Republic</option>
+                    <option value="tw">Taiwan</option>
+                    <option value="tj">Tajikistan</option>
+                    <option value="tz">Tanzania</option>
+                    <option value="th">Thailand</option>
+                    <option value="tl">Timor-Leste</option>
+                    <option value="tg">Togo</option>
+                    <option value="tk">Tokelau</option>
+                    <option value="to">Tonga</option>
+                    <option value="tt">Trinidad and Tobago</option>
+                    <option value="tn">Tunisia</option>
+                    <option value="tr">Turkey</option>
+                    <option value="tm">Turkmenistan</option>
+                    <option value="tc">Turks and Caicos Islands</option>
+                    <option value="tv">Tuvalu</option>
+                    <option value="ug">Uganda</option>
+                    <option value="ua">Ukraine</option>
+                    <option value="ae">United Arab Emirates</option>
+                    <option value="um">United States Minor Outlying Islands</option>
+                    <option value="uy">Uruguay</option>
+                    <option value="uz">Uzbekistan</option>
+                    <option value="vu">Vanuatu</option>
+                    <option value="ve">Venezuela</option>
+                    <option value="vn">Viet Nam</option>
+                    <option value="vg">Virgin Islands, British</option>
+                    <option value="vi">Virgin Islands, U.S.</option>
+                    <option value="wf">Wallis and Futuna</option>
+                    <option value="eh">Western Sahara</option>
+                    <option value="ye">Yemen</option>
+                    <option value="zm">Zambia</option>
+                    <option value="zw">Zimbabwe</option>
+                </select>
+            </div>
+
+            <button type="submit" class="submit-btn" id="unlock-note">Unlock Note</button>
+        </form>
+    </div>
+
+    <section class="why-section">
+        <h2>Why</h2>
+        <div class="why-grid">
+            <div class="card">
+                <h3>Secure</h3>
+                <p>CryptedNote is created with a high sense of security ensuring everything is encrypted, and
+                    privacy-focused providers are utilized AMAP.</p>
+            </div>
+            <div class="card">
+                <h3>Private</h3>
+                <p>CryptedNote is zero-knowledge by design. We don't know what you store, and we will never know. The
+                    code
+                    is 100% open-source for you to see.</p>
+            </div>
+            <div class="card">
+                <h3>Anonymous</h3>
+                <p>You don't need to register to use CryptedNote, simply visit the website and input your pad. That's
+                    how
+                    simple and private it is.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="policies-section">
+        <h2>Simple Policies</h2>
+        <ul class="policies-list">
+            <li>Always free to use. Huge thank you to Vexhub for providing the database.</li>
+            <li>Everything is encrypted, yes everything. We don't know anything.</li>
+            <li>We don't care what you store because we can't know nor check. Also It's open-source.</li>
+            <li>You can delete your pad anytime and anywhere.</li>
+            <li>We are not responsible if you lost your pad, or someone somehow got accessed to your pad.</li>
+            <li>The website does not log any information.</li>
+            <li>Only your hashed primary key, code, key, location, and encrypted content is stored in the database.
+                Nothing else.</li>
+        </ul>
+    </section>
+
+    <footer>
+        Made with 💖 by <a style="text-decoration: none; color: var(--text-muted);"
+            href="https://github.com/ncryptsion"><u>NCryptsion</u></a>
+    </footer>
+    <script src="./assets/js/main.js"></script>
+</body>
+</html>

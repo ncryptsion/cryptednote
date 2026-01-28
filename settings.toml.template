@@ -1,0 +1,12 @@
+[web]
+port = 8080 # The port of the website.
+
+[security]
+cookieMasterKey = "" # The master key for the cookie encryption. The more complex and long, the better.
+cookiePBKDF2Iterations = 5000 # Default is 5000.
+saltLength = 10 # Default is 10.
+
+[database]
+mongoDBURL = "" # The MongoDB cluster URL.
+databaseName = "main1" # The database name.
+collectionName = "cryptednote.notes" # The collection where the notes will be stored.
