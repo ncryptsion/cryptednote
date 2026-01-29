@@ -3,6 +3,7 @@ port = 8080 # The port of the website.
 
 [security]
 cookieMasterKey = "" # The master key for the cookie encryption. The more complex and long, the better.
+garbageKey = "" # The key paired with the selected location before hashing, so it can't be bruteforce.
 cookiePBKDF2Iterations = 5000 # Default is 5000.
 saltLength = 10 # Default is 10.
 

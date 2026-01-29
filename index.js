@@ -80,11 +80,10 @@
     web.post("/api/open-pad", async(req, res)=>{
         var { primaryKey, code, password, location } = req.body
         const realPassword = `${primaryKey}${code}${password}`
-        primaryKey = SHA512(primaryKey); code = SHA512(code); password = SHA512(password); location = SHA512(location)
+        primaryKey = SHA512(primaryKey); code = SHA512(code); password = SHA512(password); location = `${SHA512(location)}${settings.security.garbageKey}`
         location = `${primaryKey}${code}${location}`
 
         const data = await pads.findOne({ location: location })
-
         if(!data) await pads.insertOne({ location: location, content: "" })
 
         const cookieData = {
