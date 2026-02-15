@@ -36,9 +36,9 @@ node index.js
 <table border="1">
     <tr>
         <td style="text-align: center; padding: 10px;">
-            <img src="https://s6.imgcdn.dev/Y0TYfv.png" alt="Vexhub" style="width: 150px; height: auto;">
+            <img src="https://cdn.vexhub.dev/assets/files/newlogo.png" alt="Vexhub Hosting" style="width: 150px; height: auto;">
             <br>
-            <p align="center"><a href="https://vexhub.dev/">Vexhub</a></p>
+            <p align="center"><a href="https://vexhub.dev/">Vexhub Hosting</a></p>
         </td>
     </tr>
 </table>
